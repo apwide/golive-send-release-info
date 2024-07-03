@@ -17,13 +17,13 @@ inputs:
   githubToken:
     required: true
     description: 'Github token ({{secrets.GITHUB_TOKEN}})'
-  applicationName:
+  tagetApplicationName:
     required: false
     description: 'Type the name of the released application.'
-  applicationId:
+  targetApplicationId:
     required: false
     description: 'Select the id of the released application.'
-  applicaitonAutoCreate:
+  targetAutoCreate:
     required: false
     description: |
       Create the target application with provided name if it does not exist yet in Apwide Golive.

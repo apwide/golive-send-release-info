@@ -1,0 +1,67 @@
+name: 'golive-send-release-info'
+description: 'Send Release Information to Golive'
+inputs:
+  goliveToken:
+    required: false
+    description: 'Golive API Token'
+  goliveUrl:
+    description: 'Api Base Url'
+    required: false
+    default: 'https://golive.apwide.net/api'
+  goliveUsername:
+    required: false
+    description: 'Golive API Username (Golive Server)'
+  golivePassword:
+    required: false
+    description: 'Golive API Username (Golive Server)'
+  githubToken:
+    required: true
+    description: 'Github token ({{secrets.GITHUB_TOKEN}})'
+  applicationName:
+    required: false
+    description: 'Type the name of the released application.'
+  applicationId:
+    required: false
+    description: 'Select the id of the released application.'
+  applicaitonAutoCreate:
+    required: false
+    description: |
+      Create the target application with provided name if it does not exist yet in Apwide Golive.
+      N.B. User associated to your connection must have permission to manage applications in order to automatically create new applications.
+    default: 'false'
+  versionName:
+    required: true
+    description: 'Name of the current Jira version/release'
+  versionDescription:
+    required: false
+    description: 'Description of the current Jira version/release.'
+  verstionStartDate:
+    required: false
+    description: 'Will be set to current date by default. Date in ISO-8601 format. Ex: 2023-09-24T12:00:00Z'
+  versionReleaseDate:
+    required: false
+    description: 'Will be set to current date if the version is marked as "Released". Date in ISO-8601 format. Ex: 2023-10-24T12:00:00Z'
+  versionReleased:
+    required: false
+    description: 'Mark the current Jira version as released. The "Release Date" will be automatically set to current date if not explicitly specified.'
+  issueKeys:
+    required: false
+    description: 'Comma separated list of Issue Keys to add to the current Jira version/release. Ex: ECOM-3412,ECOM-6783,PAY-98'
+  issueKeysFromCommitHistory:
+    required: false
+    description: 'Parse and retrieve the Jira issue keys found in commit history and add issues to the current Jira version/release.'
+  issuesFromJql:
+    required: false
+    description: |
+      Set the JQL query used to retrieve and add issues to the current Jira version/release.
+      Ex: project = ECP AND type in (Story, Bug) AND resolution in (Fixed).
+      More about JQL [here](https://www.atlassian.com/software/jira/guides/jql)
+  sendJiraNotification:
+    required: false
+    description: 'Trigger the standard Jira notification when issues are added to the current Jira version/release.'
+outputs:
+  status:
+    description: 'Status of the action'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'

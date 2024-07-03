@@ -1,0 +1,32 @@
+{
+  "name": "golive-send-release-info",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "clean": "rimraf dist/",
+    "build": "npx ncc build src/index.ts -o dist"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@vercel/ncc": "0.38.1",
+    "rimraf": "5.0.7",
+    "ts-node": "10.9.2",
+    "typescript": "5.5.2",
+    "typescript-eslint": "7.14.1"
+  },
+  "dependencies": {
+    "@apwide/golive-github-actions": "1.0.0"
+  }
+}

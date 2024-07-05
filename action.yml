@@ -17,7 +17,7 @@ inputs:
   githubToken:
     required: true
     description: 'Github token ({{secrets.GITHUB_TOKEN}})'
-  tagetApplicationName:
+  targetApplicationName:
     required: false
     description: 'Type the name of the released application.'
   targetApplicationId:

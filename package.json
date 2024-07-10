@@ -1,6 +1,6 @@
 {
   "name": "golive-send-release-info",
-  "version": "1.0.0",
+  "version": "1.6.0",
   "description": "",
   "private": true,
   "type": "module",
@@ -14,7 +14,7 @@
   "engines": {
     "node": ">=20"
   },
-  "main":  "dist/index.js",
+  "main": "dist/index.js",
   "exports": {
     ".": "./dist/index.js"
   },

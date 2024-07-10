@@ -1,0 +1,28 @@
+name: ci
+
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      - 'release/**'
+    paths:
+      - '**.js'
+      - '**.ts'
+      - '**.json'
+      - '**.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - uses: actions/setup-node@v4
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
+        with:
+          node-version-file: .node-version
+      - name: Install deps and build
+        run: npm ci && npm run build

@@ -1,0 +1,50 @@
+name: release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'release/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - run: |
+          git config --global user.name 'Apwide CI'
+          git config --global user.email 'ci@apwide.com'
+      - uses: actions/setup-node@v4
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
+        with:
+          node-version-file: .node-version
+      - name: Install deps and build
+        run: npm ci && npm run build
+      - name: bump-version
+        run: |
+          ACTION_VERSION="$(npm show @apwide/golive-github-actions version)"
+          npm version --git-tag-version=false v${ACTION_VERSION} --silent
+          MAJOR=`echo $ACTION_VERSION | cut -d. -f1`
+          MINOR=`echo $ACTION_VERSION | cut -d. -f2`
+          PATCH=`echo $ACTION_VERSION | cut -d. -f3`
+          
+          git add -A
+          git commit -m "chore(release): bumped version to v${ACTION_VERSION}"
+          git tag v${MAJOR}.${MINOR}.${PATCH}
+          git tag v${MAJOR}.${MINOR} --force
+          git tag v${MAJOR} --force
+          git push origin
+          git push origin --tags --force
+          
+          echo "ACTION_VERSION=$ACTION_VERSION" >> "$GITHUB_ENV"
+      - uses: octokit/request-action@v2.3.1
+        id: create-release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          route: POST /repos/{owner}/{repo}/releases
+          owner: ${{github.repository_owner}}
+          repo: golive-send-release-info
+          tag_name: "v${{env.ACTION_VERSION}}"

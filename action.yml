@@ -39,7 +39,7 @@ inputs:
   versionDescription:
     required: false
     description: 'Description of the current Jira version/release.'
-  verstionStartDate:
+  versionStartDate:
     required: false
     description: 'Will be set to current date by default. Date in ISO-8601 format. Ex: 2023-09-24T12:00:00Z'
   versionReleaseDate:

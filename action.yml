@@ -1,5 +1,9 @@
 name: 'golive-send-release-info'
 description: 'Send Release Information to Golive'
+author: Apwide
+branding:
+  icon: server
+  color: purple
 inputs:
   goliveToken:
     required: false

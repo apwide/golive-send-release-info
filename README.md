@@ -24,14 +24,16 @@ Learn more about Apwide Golive: https://www.apwide.com
 (*) required
 
 ### goliveToken
-Golive API Token
+Golive API Token (Golive Cloud). [How to get a token?](https://golive.apwide.com/doc/latest/cloud/rest-api#RestAPI-api-tokenAPITokenAuthentication)
 ### goliveUrl
-Api Base Url.
+Api Base Url (Golive Server)
+Used only for Apwide Golive on Jira Server to specify the Rest API Base URL. (eg: https://jira.mycompany.com/rest/apwide/tem/1.1)
+Not needed on Golive Cloud, the API endpoint is common any Jira Cloud instance and is the default value.
 Default value: `https://golive.apwide.net/api`
 ### goliveUsername
 Golive API Username (Golive Server)
 ### golivePassword
-Golive API Username (Golive Server)
+Golive API Password (Golive Server)
 ### githubToken (*)
 Github token (`${{secrets.GITHUB_TOKEN}}`)
 ### targetApplicationName

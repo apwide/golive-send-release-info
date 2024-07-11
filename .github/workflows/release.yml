@@ -12,35 +12,43 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: |
+      - name: Set git user
+        run: |
           git config --global user.name 'Apwide CI'
           git config --global user.email 'ci@apwide.com'
-      - uses: actions/setup-node@v4
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
       - name: Install deps and build
         run: npm ci && npm run build
-      - name: bump-version
+      - name: Capture action version
         run: |
           ACTION_VERSION="$(npm show @apwide/golive-github-actions version)"
-          npm version --git-tag-version=false v${ACTION_VERSION} --silent
-          MAJOR=`echo $ACTION_VERSION | cut -d. -f1`
-          MINOR=`echo $ACTION_VERSION | cut -d. -f2`
-          PATCH=`echo $ACTION_VERSION | cut -d. -f3`
-          
+          echo "ACTION_VERSION=$ACTION_VERSION" >> "$GITHUB_ENV"
+      - name: Drop existing tag/release
+        run: |
+          git push origin :v${{env.ACTION_VERSION}}
+        continue-on-error: true
+      - name: Bump version
+        run: |
+          npm version --git-tag-version=false ${{env.ACTION_VERSION}} --silent
           git add -A
-          git commit -m "chore(release): bumped version to v${ACTION_VERSION}"
-          git tag v${MAJOR}.${MINOR}.${PATCH}
+          git commit -m "chore(release): bumped version to v${{env.ACTION_VERSION}}"
+          git push origin
+        continue-on-error: true
+      - name: Push/update tags
+        run: |
+          MAJOR=`echo ${{env.ACTION_VERSION}} | cut -d. -f1`
+          MINOR=`echo ${{env.ACTION_VERSION}} | cut -d. -f2`
+          PATCH=`echo ${{env.ACTION_VERSION}} | cut -d. -f3`
+          
+          git tag v${MAJOR}.${MINOR}.${PATCH} --force
           git tag v${MAJOR}.${MINOR} --force
           git tag v${MAJOR} --force
-          git push origin
           git push origin --tags --force
-          
-          echo "ACTION_VERSION=$ACTION_VERSION" >> "$GITHUB_ENV"
-      - uses: octokit/request-action@v2.3.1
-        id: create-release
+      - name: Create Release
+        uses: octokit/request-action@v2.3.1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:

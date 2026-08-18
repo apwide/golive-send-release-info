@@ -28,6 +28,6 @@
     "typescript-eslint": "8.67.0"
   },
   "dependencies": {
-    "@apwide/golive-github-actions": "1.8.0"
+    "@apwide/golive-github-actions": "2.3.0"
   }
 }

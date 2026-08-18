@@ -1,3 +1,3 @@
 import { sendReleaseInfo } from '@apwide/golive-github-actions'
 
-sendReleaseInfo()
+await sendReleaseInfo()

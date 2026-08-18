@@ -1,0 +1,50 @@
+{
+  "name": "@apwide/golive-github-actions",
+  "version": "1.11.0+e71f89ca",
+  "description": "Apwide Golive Github Actions",
+  "author": "Apwide",
+  "license": "MIT",
+  "keywords": [
+    "github",
+    "action",
+    "golive",
+    "apwide"
+  ],
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "openapi-ts": "openapi-ts",
+    "clean": "rimraf dist/",
+    "build": "tsup",
+    "build:all": "tsup && npm run build:types",
+    "build:types": "tsc -p tsconfig.json",
+    "lint": "npx eslint .",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write ."
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@actions/core": "3.0.1",
+    "@actions/github": "9.1.1",
+    "@octokit/plugin-rest-endpoint-methods": "18.0.0"
+  },
+  "yalcSig": "e71f89cafce2727c8e6a0b84212d2f79"
+}

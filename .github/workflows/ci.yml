@@ -18,8 +18,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - uses: actions/setup-node@v7
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
         with:
           node-version-file: .node-version
       - name: Install deps and build

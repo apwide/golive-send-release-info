@@ -6,13 +6,13 @@
   "type": "module",
   "scripts": {
     "clean": "rimraf dist/",
-    "build": "npx ncc build src/index.ts -o dist"
+    "build": "npx ncc build src/index.js -o dist"
   },
   "files": [
     "dist"
   ],
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "main": "dist/index.js",
   "exports": {
@@ -28,6 +28,6 @@
     "typescript-eslint": "8.67.0"
   },
   "dependencies": {
-    "@apwide/golive-github-actions": "1.10.0"
+    "@apwide/golive-github-actions": "file:.yalc/@apwide/golive-github-actions"
   }
 }

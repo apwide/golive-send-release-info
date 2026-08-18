@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "@apwide/golive-github-actions": {
+      "signature": "e71f89cafce2727c8e6a0b84212d2f79",
+      "file": true,
+      "replaced": "1.10.0"
+    }
+  }
+}

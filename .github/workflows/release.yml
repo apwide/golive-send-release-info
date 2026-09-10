@@ -10,12 +10,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Get Github App Token
+        uses: actions/create-github-app-token@v3
+        id: app-token
+        with:
+          client-id: ${{ vars.GH_APP_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
       - name: Checkout
         uses: actions/checkout@v7
-      - name: Set git user
-        run: |
-          git config --global user.name 'Apwide CI'
-          git config --global user.email 'ci@apwide.com'
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+#      - name: Set git user
+#        run: |
+#          git config --global user.name 'Apwide CI'
+#          git config --global user.email 'ci@apwide.com'
       - name: Setup node
         uses: actions/setup-node@v7
         with:
@@ -50,7 +58,7 @@ jobs:
       - name: Create Release
         uses: octokit/request-action@v2.3.1
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         with:
           route: POST /repos/{owner}/{repo}/releases
           owner: ${{github.repository_owner}}

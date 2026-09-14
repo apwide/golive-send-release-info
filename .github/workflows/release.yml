@@ -32,8 +32,12 @@ jobs:
         run: npm ci && npm run build
       - name: Capture action version
         run: |
-          ACTION_VERSION="$(npm show @apwide/golive-github-actions version)"
+          ACTION_VERSION="$(npm pkg get 'dependencies.@apwide/golive-github-actions' | tr -d '"')"
           echo "ACTION_VERSION=$ACTION_VERSION" >> "$GITHUB_ENV"
+      - name: Set GIT User
+        run: |
+          git config user.name "CI Apwide"
+          git config user.email "ci@apwide.com"
       - name: Drop existing tag/release
         run: |
           git push origin :v${{env.ACTION_VERSION}}
@@ -42,7 +46,7 @@ jobs:
         run: |
           npm version --git-tag-version=false ${{env.ACTION_VERSION}} --silent
           git add -A
-          git commit -m "chore(release): bumped version to v${{env.ACTION_VERSION}}"
+          git commit -m "chore(release): bumped version to v${{env.ACTION_VERSION}} [skip ci]"
           git push origin
         continue-on-error: true
       - name: Push/update tags

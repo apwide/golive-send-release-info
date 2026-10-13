@@ -31,6 +31,7 @@
     "@apwide/golive-github-actions": "2.8.0"
   },
   "overrides": {
-    "undici": "6.28.1"
+    "undici": "6.28.1",
+    "brace-expansion": "^5.0.12"
   }
 }

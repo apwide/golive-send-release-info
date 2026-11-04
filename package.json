@@ -28,7 +28,7 @@
     "typescript-eslint": "8.67.0"
   },
   "dependencies": {
-    "@apwide/golive-github-actions": "2.8.0"
+    "@apwide/golive-github-actions": "2.9.0"
   },
   "overrides": {
     "undici": "6.28.1",
